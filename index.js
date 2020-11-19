@@ -8,28 +8,27 @@ class Player {
     this.name = name;
     console.log(`${name} plays ${move}`);
   }
-
   static moveSet = ["rock", "paper", "scissors"];
 
-  static compareMoves(player1, player2) {
-    const player1MoveIndex = Player.moveSet.indexOf(player1.move) - 1;
-    const player2MoveIndex = Player.moveSet.indexOf(player2.move) - 1;
-    if (player1MoveIndex === player2MoveIndex) {
-      console.log("~This round is a tie~");
-    } else if (
-      player1MoveIndex - player2MoveIndex < -1 ||
-      (player1MoveIndex > player2MoveIndex &&
-        player1MoveIndex * player2MoveIndex > -1)
-    ) {
-      console.log(`~${player1.name} wins.~`);
-    } else if (
-      player2MoveIndex - player1MoveIndex < -1 ||
-      (player2MoveIndex > player1MoveIndex &&
-        player1MoveIndex * player2MoveIndex > -1)
-    ) {
-      console.log(`~${player2.name} wins.~`);
-    } else {
-      console.log(`There was an issue`);
+  static selectWinner(player1, player2) {
+    const result = 
+    (Player.moveSet.indexOf(player1.move)+1)**2+
+    (Player.moveSet.indexOf(player2.move)+1)**2*(-1);
+    switch(result)
+    {
+      case 0 :
+        console.log("~This round is a tie~");
+        break
+      case 3:
+      case 5:
+      case -8:
+        console.log(`~${player1.name} wins.~`);
+        break
+      case -3:
+      case -5:
+      case 8:
+        console.log(`~${player2.name} wins.~`);
+        break
     }
   }
 }
@@ -48,4 +47,7 @@ class ComputerPlayer extends Player {
 
 const human = new HumanPlayer();
 const computer = new ComputerPlayer();
-Player.compareMoves(human, computer);
+
+for (var x = 0; x < 27; x++){
+Player.selectWinner(human, computer);
+}
